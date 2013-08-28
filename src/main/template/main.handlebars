@@ -1,14 +1,21 @@
+    
+    <div class="row-fluid">
+        <div id='sidebar' class="span3">
+            <ul id='sidebar_resources' class='nav nav-pills nav-stacked'>
+            </ul>
+        </div>
 
-<div class='container' id='resources_container'>
-    <ul id='resources'>
-    </ul>
+        <div class='container span9' id='resources_container'>
+            <ul id='resources'>
+            </ul>
 
-    <div class="footer">
-        <br>
-        <br>
-        <h4 style="color: #999">[ <span style="font-variant: small-caps">base url</span>: {{basePath}}
-        {{#if apiVersion}}
-        , <span style="font-variant: small-caps">api version</span>: {{apiVersion}}
-        {{/if}}]</h4>
+            <div class="footer">
+                <br>
+                <br>
+                <h4 style="color: #999">[ <span style="font-variant: small-caps">base url</span>: {{basePath}}
+                {{#if apiVersion}}
+                , <span style="font-variant: small-caps">api version</span>: {{apiVersion}}
+                {{/if}}]</h4>
+            </div>
+        </div>
     </div>
-</div>

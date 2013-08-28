@@ -1,0 +1,9 @@
+
+<a href='#!/{{name}}' class='toggle-icon'><i class='icon-chevron-right'></i> /{{name}}</a>
+<ul class='sidebar_endpoints nav nav-pills nav-stacked' id='{{name}}_endpoint_list' style='display: none;'>
+    {{#each operationsArray}}
+        <li class='sidebar_endpoint'>
+            <a href='#!/{{resourceName}}/{{nickname}}_{{httpMethod}}_{{number}}' class="toggleOperation {{httpMethod}}" onclick="Docs.toggleOperationContent('{{resourceName}}', '{{nickname}}_{{httpMethod}}_{{number}}_content');">{{nickname}}</a>
+        </li>
+    {{/each}}
+</ul>
