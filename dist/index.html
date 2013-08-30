@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Swagger UI</title>
-    <link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
-    <link href='css/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
-    <link href='css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
-    <script src='lib/jquery-1.8.0.min.js' type='text/javascript'></script>
-    <script src='lib/jquery.slideto.min.js' type='text/javascript'></script>
-    <script src='lib/jquery.wiggle.min.js' type='text/javascript'></script>
-    <script src='lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
-    <script src='lib/handlebars-1.0.rc.1.js' type='text/javascript'></script>
-    <script src='lib/underscore-min.js' type='text/javascript'></script>
-    <script src='lib/backbone-min.js' type='text/javascript'></script>
-    <script src='lib/swagger.js' type='text/javascript'></script>
-    <script src='swagger-ui.js' type='text/javascript'></script>
-    <script src='lib/highlight.7.3.pack.js' type='text/javascript'></script>
+	<title>Swagger UI</title>
+	<link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
+	<link href='css/custom/fonts.css' rel='stylesheet' type='text/css'/>
+	<link href='css/custom/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+	<link href='css/custom/bootstrap-responsive.min.css' rel='stylesheet' type='text/css'/>
+	<link href='css/custom/font-awesome.min.css' rel='stylesheet' type='text/css'/>
+	<link href='css/custom/font-awesome-ie7.min.css' rel='stylesheet' type='text/css'/>
+	<link href='css/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
+	<link href='css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+	<link href='css/custom/header.css' rel='stylesheet' type='text/css'/>
+	<link href='css/custom/footer.css' rel='stylesheet' type='text/css'/>
+	<script src='lib/jquery-1.8.0.min.js' type='text/javascript'></script>
+	<script src='lib/jquery.slideto.min.js' type='text/javascript'></script>
+	<script src='lib/jquery.wiggle.min.js' type='text/javascript'></script>
+	<script src='lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
+	<script src='lib/handlebars-1.0.rc.1.js' type='text/javascript'></script>
+	<script src='lib/underscore-min.js' type='text/javascript'></script>
+	<script src='lib/backbone-min.js' type='text/javascript'></script>
+	<script src='lib/swagger.js' type='text/javascript'></script>
+	<script src='swagger-ui.js' type='text/javascript'></script>
+	<script src='lib/highlight.7.3.pack.js' type='text/javascript'></script>
 
-    <script type="text/javascript">
-	$(function () {
-	    window.swaggerUi = new SwaggerUi({
-                discoveryUrl:"http://petstore.swagger.wordnik.com/api/api-docs.json",
+	<script type="text/javascript">
+    $(function () {
+        window.swaggerUi = new SwaggerUi({
+                discoveryUrl:"http://localhost/api/1.1/wsdl/swagger",
                 apiKey:"special-key",
                 dom_id:"swagger-ui-container",
                 supportHeaderParams: false,
                 supportedSubmitMethods: ['get', 'post', 'put'],
                 onComplete: function(swaggerApi, swaggerUi){
-                	if(console) {
+                    if(console) {
                         console.log("Loaded SwaggerUI")
                         console.log(swaggerApi);
                         console.log(swaggerUi);
@@ -33,7 +40,7 @@
                   $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
                 },
                 onFailure: function(data) {
-                	if(console) {
+                    if(console) {
                         console.log("Unable to Load SwaggerUI");
                         console.log(data);
                     }
@@ -48,33 +55,192 @@
 </head>
 
 <body>
-<div id='header'>
-    <div class="swagger-ui-wrap">
-        <a id="logo" href="http://swagger.wordnik.com">swagger</a>
+	<header class="navbar">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
 
-        <form id='api_selector'>
-            <div class='input icon-btn'>
-                <img id="show-pet-store-icon" src="images/pet_store_api.png" title="Show Swagger Petstore Example Apis">
-            </div>
-            <div class='input icon-btn'>
-                <img id="show-wordnik-dev-icon" src="images/wordnik_api.png" title="Show Wordnik Developer Apis">
-            </div>
-            <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl"
-                                      type="text"/></div>
-            <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
-            <div class='input'><a id="explore" href="#">Explore</a></div>
-        </form>
-    </div>
-</div>
+				<span class="phone-number pull-right hidden-desktop">
+					<span class="hidden-phone">Call Us!</span>
+					(877) 897-FIRE
+				</span>
 
-<div id="message-bar" class="swagger-ui-wrap">
-    &nbsp;
-</div>
+				<a class="brand" href="http://www.callfire.com">
+					<img src="https://www.callfire.com/sites/all/themes/ghost_rider/images/logo.png"></a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="menu-281001 first">
+							<a href="https://www.callfire.com/tour" title="">Products</a>
+						</li>
+						<li class="menu-282001">
+							<a href="https://www.callfire.com/pricing">Pricing</a>
+						</li>
+						<li class="menu-636001">
+							<a href="https://www.callfire.com/api-documentation">API</a>
+						</li>
+						<li class="menu-283001 last">
+							<a href="https://www.callfire.com/help">Help</a>
+						</li>
+					</ul>
+					<ul class="nav menu-sub-nav pull-right">
+						<li class="menu-1102009 first">
+							<a href="https://www.callfire.com/dialer/agents/userlogin.do" title="">Agents</a>
+						</li>
+						<li class="menu-1102008 last">
+							<a href="https://www.callfire.com/ui/login" title="">Log In</a>
+						</li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+				<span class="phone-number pull-right visible-desktop">Call Us! (877) 897-FIRE</span>
+			</div>
+		</div>
+	</header>
+	<div id="hero" class="headline">
+		<div class="container-fluid">
+			<div class="headline-inner">
+				<a id="main-content"></a>
+				<h1 class="title" id="page-title">REST Documentation</h1>
+			</div>
+		</div>
+	</div>
 
-<div id="swagger-ui-container" class="swagger-ui-wrap">
+	<div id="message-bar" class="swagger-ui-wrap">&nbsp;</div>
 
-</div>
+	<div id="swagger-ui-container" class="container-fluid"></div>
+	<section id="footer-links">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span3">
+					<h2>Company</h2>
+					<ul class="nav">
+						<li class="menu-288001 first">
+							<a href="https://www.callfire.com/about" title="">About Us</a>
+						</li>
+						<li class="menu-290001">
+							<a href="https://www.callfire.com/about/team" title="">Team</a>
+						</li>
+						<li class="menu-289001">
+							<a href="https://www.callfire.com/careers" title="">Careers</a>
+						</li>
+						<li class="menu-291001">
+							<a href="https://www.callfire.com/blog" title="">Blog</a>
+						</li>
+						<li class="menu-394001 last">
+							<a href="https://www.callfire.com/about/press" title="">Press</a>
+						</li>
+					</ul>
+				</div>
+				<div class="span3">
+					<h2>Products</h2>
+					<ul class="nav">
+						<li class="menu-294001 first">
+							<a href="https://www.callfire.com/product/voice-broadcast" title="">Voice Broadcast</a>
+						</li>
+						<li class="menu-295001">
+							<a href="https://www.callfire.com/product/text-messaging" title="">Text Messaging</a>
+						</li>
+						<li class="menu-296001">
+							<a href="https://www.callfire.com/product/call-tracking" title="">Call Tracking</a>
+						</li>
+						<li class="menu-297001">
+							<a href="https://www.callfire.com/product/cloud-call-center" title="">Cloud Call Center</a>
+						</li>
+						<li class="menu-298001 last">
+							<a href="https://www.callfire.com/product/interactive-voice-response" title="">CallFire IVR</a>
+						</li>
+					</ul>
+				</div>
+				<div class="span3">
+					<h2>Resources</h2>
+					<ul class="nav">
+						<li class="menu-320001 active-trail first active">
+							<a href="https://www.callfire.com/case-studies" title="" class="active-trail active">Case Studies</a>
+						</li>
+						<li class="menu-319001">
+							<a href="https://www.callfire.com/industry" title="">Industries</a>
+						</li>
+						<li class="menu-318001">
+							<a href="https://www.callfire.com/help/glossary/communications" title="">Communications Glossary</a>
+						</li>
+						<li class="menu-316001">
+							<a href="https://www.callfire.com/help/glossary/business-marketing" title="">Marketing Glossary</a>
+						</li>
+						<li class="menu-1100001 last">
+							<a href="https://www.callfire.com/local-phone-numbers/area-codes" title="">Area Codes</a>
+						</li>
+					</ul>
+				</div>
+				<div class="span3">
+					<h2>Help</h2>
+					<ul class="nav">
+						<li class="menu-326001 first">
+							<a href="https://www.callfire.com/help/docs/getting-started" title="">Getting Started</a>
+						</li>
+						<li class="menu-474001">
+							<a href="https://www.callfire.com/help/docs/faq" title="">FAQs</a>
+						</li>
+						<li class="menu-328001">
+							<a href="https://www.callfire.com/help/docs/callfire-xml" title="">CallFire XML</a>
+						</li>
+						<li class="menu-330001">
+							<a href="https://www.callfire.com/contact" title="">Contact Us</a>
+						</li>
+						<li class="menu-325001 last">
+							<a href="https://www.callfire.com/help" title="">More help...</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<footer id="footer" class="region region-footer clearfix">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="block block-block row-fluid first odd">
 
+					<div class="span6 legal-links">
+						<p>&copy; Copyright 2013 CallFire Inc. All Rights Reserved</p>
+						<p>
+							<a href="https://www.callfire.com/legal/privacy">Privacy Policy</a>
+							/
+							<a href="https://www.callfire.com/legal/terms">Terms</a>
+							/
+							<a href="https://www.callfire.com/legal/compliance">FTC/FCC/DNC Compliance</a>
+							/
+							<a href="/sitemap">Sitemap</a>
+						</p>
+						<div class="social-links">
+							<p>
+								<a href="http://twitter.com/CallFire"> <i class="icon-twitter-sign"></i>
+								</a>
+								<a href="https://www.facebook.com/callfire"> <i class="icon-facebook-sign"></i>
+								</a>
+								<a href="https://plus.google.com/100142045997033051154?prsrc=3">
+									<i class="icon-google-plus-sign"></i>
+								</a>
+							</p>
+						</div>
+					</div>
+					<div class="span3">
+						Contact Support
+						<a href="mailto:support@callfire.com">support@callfire.com</a>
+						<br>
+						Contact Sales
+						<a href="mailto:sales@callfire.com">sales@callfire.com</a>
+					</div>
+					<div class="span3">
+						<span class="title">Phone</span> <strong>+1.877.897.3473</strong>
+						<br>
+						<span class="title">Fax</span> <strong>+1.310.943.0415</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 </body>
-
 </html>
