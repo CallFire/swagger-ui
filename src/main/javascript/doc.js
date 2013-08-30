@@ -115,6 +115,7 @@ var Docs = {
 	},
 
 	toggleEndpointListForResource: function(resource) {
+		console.log('toggle');
 		var elem = $('li#resource_' + Docs.escapeResourceName(resource) + ' ul.endpoints');
 		if (elem.is(':visible')) {
 			Docs.collapseEndpointListForResource(resource);
@@ -171,6 +172,26 @@ var Docs = {
 
 	escapeResourceName: function(resource) {
 		return resource.replace(/[!"#$%&'()*+,.\/:;<=>?@\[\\\]\^`{|}~]/g, "\\$&");
+	},
+
+	toggleOperationContent: function(resource, operation) {
+		var elem = $('#' + Docs.escapeResourceName(resource + '_' + operation));
+		if (elem.is(':visible')) {	
+			Docs.collapseOperation(elem);
+		} else {
+			Docs.collapseOperation($('li.operation div.content'));
+			$('#resources > li.resource').each(function(i) {
+				if($(this).hasClass('active') && !($(this).get(0) === $('li#resource_' + resource).get(0))) {
+					var resourceId = $(this).attr('id');
+					resourceId = resourceId.replace('resource_', '');
+					Docs.collapseEndpointListForResource(resourceId);
+				}
+			})
+			if (!$('li#resource_' + Docs.escapeResourceName(resource) + ' ul.endpoints').is(':visible')) {
+				Docs.expandEndpointListForResource(resource);
+			}
+			Docs.expandOperation(elem);
+		}
 	},
 
 	expandOperation: function(elem) {

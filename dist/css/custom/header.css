@@ -1,0 +1,163 @@
+.container-fluid {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+#swagger-ui-container {
+  margin-bottom: 30px;
+}
+
+/* Hero */
+#hero {
+  background: #028dd0;
+  color: #9bd9ff;
+  padding: 70px 0 0;
+  text-align: center;
+}
+#hero h1 {
+  font-family: Lato, "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #fff;
+  font-size: 64px;
+  font-weight: 300;
+  line-height: 1;
+}
+#hero .btn {
+  font-size: 24px;
+  margin: 30px 0;
+  padding: 18px 32px;
+  background-color: #f18627;
+}
+#hero .btn:hover {
+  background-color: #7f3b03;
+}
+#hero.headline {
+  padding: 20px 0;
+  text-align: left;
+}
+#hero.headline h1 {
+  font-size: 48px;
+}
+
+/* CUSTOMIZE THE NAVBAR
+    -------------------------------------------------- */
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar {
+  background: #002c47;
+  z-index: 1;
+  margin-bottom: 0;
+}
+.navbar.scrolled {
+  transition: background 1s ease-in-out;
+  -moz-transition: background 1s ease-in-out;
+  -webkit-transition: background 1s ease-in-out;
+  background: rgba(0, 44, 71, 0.95);
+}
+/* Remove border and change up box shadow for more contrast */
+.navbar .navbar-inner {
+  background: transparent;
+  border: 0;
+}
+/* Downsize the brand/project name a bit */
+.navbar .brand {
+  text-shadow: none;
+  padding: 11px 20px;
+}
+.navbar .brand img {
+  width: 130px;
+}
+.navbar .nav {
+  margin: 15px 10px 15px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+.navbar .nav > li > a {
+  text-shadow: none;
+  color: #FFF;
+  /* Navbar links: increase padding for taller navbar */
+
+}
+.navbar .nav > li > a:hover {
+  color: #FFF;
+  text-decoration: underline;
+}
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus,
+.navbar .nav > .active-trail > a,
+.navbar .nav > .active-trail > a:hover,
+.navbar .nav > .active-trail > a:focus {
+  box-shadow: none;
+  background: #f18627;
+  color: #FFF;
+}
+/* Offset the responsive button for proper vertical alignment */
+.navbar .btn-navbar {
+  margin-top: 20px;
+  background-color: #001421;
+  background-image: none;
+  color: #fff;
+}
+.navbar .btn-navbar:hover {
+  background: #028dd0;
+}
+.menu-sub-nav li.last a {
+  background: #018fd0;
+}
+.menu-sub-nav li.last a:hover {
+  background: #024464;
+}
+.phone-number {
+  color: #4cc5eb;
+  font-weight: 700;
+  margin-top: 10px;
+  padding: 15px 15px 5px;
+}
+
+/* SIDEBAR
+    -------------------------------------------------- */
+
+#sidebar ul#sidebar_resources {
+  background-color: #f6f6f6;
+  padding: 20px;
+}
+
+.sidebar_item > a {
+  color: #028dd0;
+  font-size: 1em;
+}
+
+.sidebar_item ul.sidebar_endpoints {
+  margin-left: 13px;
+}
+
+.sidebar_endpoint .nav {
+  margin-bottom: 0;
+}
+
+.sidebar_endpoint > a {
+  color: #999;
+}
+
+.nav-pills > li > a.post:hover {
+  background-color: #ebf7f0;
+  color: #10A254;
+}
+.nav-pills > li > a.get:hover {
+  background-color: #e7f0f7;
+  color: #0f6ab4;
+}
+.nav-pills > li > a.put:hover {
+  background-color: #f9f2e9;
+  color: #f18627;
+}
+.nav-pills > li > a.delete:hover {
+  background-color: #f5e8e8;
+  color: #e64517;
+}
+
+/* CONTENT
+    -------------------------------------------------- */
+
+select {
+  width: 100%;
+}
