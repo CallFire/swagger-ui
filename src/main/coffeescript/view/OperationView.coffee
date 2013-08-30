@@ -49,7 +49,25 @@ class OperationView extends Backbone.View
   addParameter: (param) ->
     # Render a parameter
     paramView = new ParameterView({model: param, tagName: 'tr', readOnly: @model.isReadOnly})
+
+    paramView.render()
+
+    if param.conditions
+      @addCondition condition, paramView.el for condition in param.conditions
+
     $('.operation-params', $(@el)).append paramView.render().el
+
+  addCondition: (cond, el) ->
+    field = $('select[name="' + cond.field + '"]', $(this.el))
+    field.on "change", ->
+        if $(this).val() == cond.value
+            $(el).show()
+            return
+        else
+            $(el).hide()
+            return
+    field.change()
+    return
 
   addStatusCode: (statusCode) ->
     # Render status codes
