@@ -60,12 +60,12 @@ class OperationView extends Backbone.View
   addCondition: (cond, el) ->
     field = $('select[name="' + cond.field + '"]', $(this.el))
     field.on "change", ->
-        if $(this).val() == cond.value
-            $(el).show()
-            return
-        else
-            $(el).hide()
-            return
+      if $(this).val() == cond.value
+        $(el).show()
+        return
+      else
+        $(el).hide()
+        return
     field.change()
     return
 
@@ -79,7 +79,7 @@ class OperationView extends Backbone.View
     # Check for errors
     form = $('.sandbox', $(@el))
     error_free = true
-    form.find("input.required").each ->
+    form.find("input.required:visible").each ->
       $(@).removeClass "error"
       if jQuery.trim($(@).val()) is ""
         $(@).addClass "error"
@@ -90,22 +90,34 @@ class OperationView extends Backbone.View
     # if error free submit it
     if error_free
       map = {}
-      for o in form.serializeArray()
+      for o in form.find(":visible").serializeArray()
         if(o.value? && jQuery.trim(o.value).length > 0)
           map[o.name] = o.value
 
-      isFileUpload = form.children().find('input[type~="file"]').size() != 0
+      isFileUpload = form.children().find('input[type~="file"]:visible').size() != 0
 
       isFormPost = false
       consumes = "application/json"
+
+      actualParams = []
+      for param in @model.parameters
+        if param.conditions
+          for cond in param.conditions
+            if map[cond.field] = cond.value
+              actualParams.push param
+              break
+        else
+          actualParams.push param
+
       if @model.consumes and @model.consumes.length > 0
         # honor the consumes setting above everything else
         consumes = @model.consumes[0]
       else 
-        for o in @model.parameters
+        for o in actualParams
           if o.paramType == 'form'
             isFormPost = true
             consumes = false
+            break
 
         if isFileUpload
           consumes = false
@@ -117,23 +129,23 @@ class OperationView extends Backbone.View
         bodyParam = new FormData()
 
         # add params except file
-        for param in @model.parameters
+        for param in actualParams
           if (param.paramType is 'body' or 'form') and param.name isnt 'file' and param.name isnt 'File' and map[param.name]?
             bodyParam.append(param.name, map[param.name])
 
         # add files
-        $.each form.children().find('input[type~="file"]'), (i, el) ->
+        $.each form.children().find('input[type~="file"]:visible'), (i, el) ->
           bodyParam.append($(el).attr('name'), el.files[0])
 
         console.log(bodyParam)
       else if isFormPost
         bodyParam = new FormData()
-        for param in @model.parameters
+        for param in actualParams
           if map[param.name]?
             bodyParam.append(param.name, map[param.name])
       else
         bodyParam = null
-        for param in @model.parameters
+        for param in actualParams
           if param.paramType is 'body'
             bodyParam = map[param.name]
 
