@@ -105,7 +105,7 @@ class OperationView extends Backbone.View
       for param in @model.parameters
         if param.conditions
           for cond in param.conditions
-            if map[cond.field] = cond.value
+            if map[cond.field] == cond.value
               currentParams.push param
               break
         else
