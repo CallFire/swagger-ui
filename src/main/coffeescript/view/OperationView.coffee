@@ -94,26 +94,28 @@ class OperationView extends Backbone.View
         if(o.value? && jQuery.trim(o.value).length > 0)
           map[o.name] = o.value
 
-      isFileUpload = form.children().find('input[type~="file"]:visible').size() != 0
+      isFileUpload = form.children().find('input[type~="file"]:visible').filter( (index) ->
+        return @files.length > 0
+      ).size() != 0
 
       isFormPost = false
       consumes = "application/json"
 
-      actualParams = []
+      currentParams = []
       for param in @model.parameters
         if param.conditions
           for cond in param.conditions
             if map[cond.field] = cond.value
-              actualParams.push param
+              currentParams.push param
               break
         else
-          actualParams.push param
+          currentParams.push param
 
       if @model.consumes and @model.consumes.length > 0
         # honor the consumes setting above everything else
         consumes = @model.consumes[0]
       else 
-        for o in actualParams
+        for o in currentParams
           if o.paramType == 'form'
             isFormPost = true
             consumes = false
@@ -129,23 +131,24 @@ class OperationView extends Backbone.View
         bodyParam = new FormData()
 
         # add params except file
-        for param in actualParams
+        for param in currentParams
           if (param.paramType is 'body' or 'form') and param.name isnt 'file' and param.name isnt 'File' and map[param.name]?
             bodyParam.append(param.name, map[param.name])
 
         # add files
         $.each form.children().find('input[type~="file"]:visible'), (i, el) ->
-          bodyParam.append($(el).attr('name'), el.files[0])
+          if el.files.length > 0
+            bodyParam.append($(el).attr('name'), el.files[0])
 
         console.log(bodyParam)
       else if isFormPost
         bodyParam = new FormData()
-        for param in actualParams
+        for param in currentParams
           if map[param.name]?
             bodyParam.append(param.name, map[param.name])
       else
         bodyParam = null
-        for param in actualParams
+        for param in currentParams
           if param.paramType is 'body'
             bodyParam = map[param.name]
 
