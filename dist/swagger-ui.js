@@ -1494,13 +1494,34 @@ helpers = helpers || Handlebars.helpers; data = data || {};
     };
 
     OperationView.prototype.addParameter = function(param) {
-      var paramView;
+      var condition, paramView, _i, _len, _ref;
       paramView = new ParameterView({
         model: param,
         tagName: 'tr',
         readOnly: this.model.isReadOnly
       });
+      paramView.render();
+      if (param.conditions) {
+        _ref = param.conditions;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          condition = _ref[_i];
+          this.addCondition(condition, paramView.el);
+        }
+      }
       return $('.operation-params', $(this.el)).append(paramView.render().el);
+    };
+
+    OperationView.prototype.addCondition = function(cond, el) {
+      var field;
+      field = $('select[name="' + cond.field + '"]', $(this.el));
+      field.on("change", function() {
+        if ($(this).val() === cond.value) {
+          $(el).show();
+        } else {
+          $(el).hide();
+        }
+      });
+      field.change();
     };
 
     OperationView.prototype.addStatusCode = function(statusCode) {
@@ -1513,14 +1534,14 @@ helpers = helpers || Handlebars.helpers; data = data || {};
     };
 
     OperationView.prototype.submitOperation = function(e) {
-      var bodyParam, consumes, error_free, form, headerParams, invocationUrl, isFileUpload, isFormPost, map, o, obj, param, paramContentTypeField, responseContentTypeField, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1, _ref2, _ref3, _ref4,
+      var bodyParam, cond, consumes, currentParams, error_free, form, headerParams, invocationUrl, isFileUpload, isFormPost, map, o, obj, param, paramContentTypeField, responseContentTypeField, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _len5, _len6, _m, _n, _o, _ref, _ref1, _ref2,
         _this = this;
       if (e != null) {
         e.preventDefault();
       }
       form = $('.sandbox', $(this.el));
       error_free = true;
-      form.find("input.required").each(function() {
+      form.find("input.required:visible").each(function() {
         var _this = this;
         $(this).removeClass("error");
         if (jQuery.trim($(this).val()) === "") {
@@ -1535,25 +1556,44 @@ helpers = helpers || Handlebars.helpers; data = data || {};
       });
       if (error_free) {
         map = {};
-        _ref = form.serializeArray();
+        _ref = form.find(":visible").serializeArray();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           o = _ref[_i];
           if ((o.value != null) && jQuery.trim(o.value).length > 0) {
             map[o.name] = o.value;
           }
         }
-        isFileUpload = form.children().find('input[type~="file"]').size() !== 0;
+        isFileUpload = form.children().find('input[type~="file"]:visible').filter(function(index) {
+          return this.files.length > 0;
+        }).size() !== 0;
         isFormPost = false;
         consumes = "application/json";
+        currentParams = [];
+        _ref1 = this.model.parameters;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          param = _ref1[_j];
+          if (param.conditions) {
+            _ref2 = param.conditions;
+            for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+              cond = _ref2[_k];
+              if (map[cond.field] === cond.value) {
+                currentParams.push(param);
+                break;
+              }
+            }
+          } else {
+            currentParams.push(param);
+          }
+        }
         if (this.model.consumes && this.model.consumes.length > 0) {
           consumes = this.model.consumes[0];
         } else {
-          _ref1 = this.model.parameters;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            o = _ref1[_j];
+          for (_l = 0, _len3 = currentParams.length; _l < _len3; _l++) {
+            o = currentParams[_l];
             if (o.paramType === 'form') {
               isFormPost = true;
               consumes = false;
+              break;
             }
           }
           if (isFileUpload) {
@@ -1564,31 +1604,30 @@ helpers = helpers || Handlebars.helpers; data = data || {};
         }
         if (isFileUpload) {
           bodyParam = new FormData();
-          _ref2 = this.model.parameters;
-          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-            param = _ref2[_k];
+          for (_m = 0, _len4 = currentParams.length; _m < _len4; _m++) {
+            param = currentParams[_m];
             if ((param.paramType === 'body' || 'form') && param.name !== 'file' && param.name !== 'File' && (map[param.name] != null)) {
               bodyParam.append(param.name, map[param.name]);
             }
           }
-          $.each(form.children().find('input[type~="file"]'), function(i, el) {
-            return bodyParam.append($(el).attr('name'), el.files[0]);
+          $.each(form.children().find('input[type~="file"]:visible'), function(i, el) {
+            if (el.files.length > 0) {
+              return bodyParam.append($(el).attr('name'), el.files[0]);
+            }
           });
           console.log(bodyParam);
         } else if (isFormPost) {
           bodyParam = new FormData();
-          _ref3 = this.model.parameters;
-          for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
-            param = _ref3[_l];
+          for (_n = 0, _len5 = currentParams.length; _n < _len5; _n++) {
+            param = currentParams[_n];
             if (map[param.name] != null) {
               bodyParam.append(param.name, map[param.name]);
             }
           }
         } else {
           bodyParam = null;
-          _ref4 = this.model.parameters;
-          for (_m = 0, _len4 = _ref4.length; _m < _len4; _m++) {
-            param = _ref4[_m];
+          for (_o = 0, _len6 = currentParams.length; _o < _len6; _o++) {
+            param = currentParams[_o];
             if (param.paramType === 'body') {
               bodyParam = map[param.name];
             }
